@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 
-public class Demo implements EntryPoint, ClickHandler
+public class Sample implements EntryPoint, ClickHandler
 {
 	private static class MyWorker
 	{
