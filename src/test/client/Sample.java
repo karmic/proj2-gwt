@@ -81,8 +81,23 @@ public class Sample implements EntryPoint, ClickHandler
 			postRequest(url,encData);
 		}
 		else if (source == editButton) {
-			Window.alert(selectedWorker.name);
+			showEditForm(selectedWorker.name, selectedWorker.username,
+"", selectedWorker.department, true);
 		}
+		else if (source == editSubmitButton) {
+         String encData = URL.encode("name") + "=" +
+            URL.encode(nameBox.getText()) + "&" +
+            URL.encode("username") + "=" +
+            URL.encode(userBox.getText()) + "&" +
+            URL.encode("password") + "=" +
+            URL.encode(passBox.getText()) + "&" +
+            URL.encode("department") + "=" +
+            URL.encode(deptBox.getText()) + "&" +
+            URL.encode("id") + "=" + 
+            URL.encode(selectedWorker.id + "");
+         String url = "http://localhost:3000/workers/update";
+         postRequest(url,encData);
+	 }
 	}
 	private void postRequest(String url, String data)
 	{
