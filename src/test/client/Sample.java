@@ -44,7 +44,6 @@ public class Sample implements EntryPoint, ClickHandler
    ArrayList<MyWorker> workers = new ArrayList<MyWorker>();
    JsArray<Worker> jsonData;
    VerticalPanel mainPanel = new VerticalPanel();
-   Button loginButton = new Button("Login");
    Button addButton = new Button("Add worker");
    Button addSubmitButton = new Button("Add");
    Button editButton = new Button("Edit worker");
@@ -59,7 +58,6 @@ public class Sample implements EntryPoint, ClickHandler
    public void onModuleLoad()
    {
       RootPanel.get().add(mainPanel);
-      loginButton.addClickHandler(this);
       addButton.addClickHandler(this);
       addSubmitButton.addClickHandler(this);
       editSubmitButton.addClickHandler(this);
@@ -73,24 +71,7 @@ public class Sample implements EntryPoint, ClickHandler
    {
       Object source = e.getSource();
      
-      if (source == loginButton)
-      {
-        showLoginForm("","",true);
-      }
-      else if (source == loginButton) 
-      {
-         int id = selectedWorker.id;
-         String encData = URL.encode("username") + "=" +
-               URL.encode(userBox.getText()) + "&" +
-               URL.encode("password") + "=" +
-               URL.encode(passBox.getText()) + "&" +
-               URL.encode("id") + "=" +
-               URL.encode("" + id);
-            String url = "http://localhost:3000/workers/enter";
-            posteRequest(url,encData);
-      }
-       
-      else if (source == addButton) 
+      if (source == addButton) 
       {
          showEditForm("","","","",false);
       }
@@ -163,32 +144,6 @@ public class Sample implements EntryPoint, ClickHandler
          Window.alert(e.getMessage());
       }
    }
-   private void posteRequest(String url, String data)
-      {
-         final RequestBuilder rb =
-            new RequestBuilder(RequestBuilder.POST,url);
-         rb.setHeader("Content-type",
-                  "application/x-www-form-urlencoded");
-         try {
-            rb.sendRequest(data, new RequestCallback()
-            {
-               public void onError(final Request request,
-                  final Throwable exception)
-               {
-                  Window.alert(exception.getMessage());
-               }
-               public void onResponseReceived(final Request request,
-                  final Response response)
-               {
-                  String url = "http://localhost:3000/workers/enter";
-                  getRequest(url);
-               }
-            });
-         }
-         catch (final Exception e) {
-         Window.alert(e.getMessage());
-      }
-   }
    private void getRequest(String url)
    {
       final RequestBuilder rb =
@@ -251,22 +206,6 @@ public class Sample implements EntryPoint, ClickHandler
       }
       mainPanel.clear();
       mainPanel.add(editPanel);
-   }
-   private void showLoginForm(String userStr, String passStr, boolean editing)
-   {
-      VerticalPanel editPanel = new VerticalPanel();
-      HorizontalPanel row1 = new HorizontalPanel();
-      Label userLabel = new Label("Username: ");
-      row1.add(userLabel);
-      row1.add(userBox);
-      userBox.setText(userStr);
-      editPanel.add(row1);
-      HorizontalPanel row2 = new HorizontalPanel();
-      Label passLabel = new Label("Password: ");
-      row2.add(passLabel);
-      row2.add(passBox);
-      passBox.setText(passStr);
-      editPanel.add(row2);
    }
    private JsArray<Worker> getJSONData(String json)
    {
